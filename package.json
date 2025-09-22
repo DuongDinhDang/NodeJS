@@ -1,33 +1,35 @@
 {
-  "name": "nodejs-expressjs",
-  "version": "1.0.0",
-  "description": "nodejs pro hoidanit",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DuongDinhDang/NodeJS.git"
-  },
-  "keywords": [
-    "node",
-    "js",
-    "express",
-    "mongodb"
-  ],
-  "author": "DinhDang",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DuongDinhDang/NodeJS/issues"
-  },
-  "homepage": "https://github.com/DuongDinhDang/NodeJS#readme",
-  "dependencies": {
-    "express": "5.0.1"
-  },
-  "devDependencies": {
-    "@types/express": "5.0.0",
-    "@types/node": "22.10.7",
-    "typescript": "5.7.3"
-  }
+    "name": "nodejs-expressjs",
+    "version": "1.0.0",
+    "description": "nodejs pro hoidanit",
+    "main": "dist/app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "tsc && node dist/app.js",
+        "dev": "tsc && node dist/app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DuongDinhDang/NodeJS.git"
+    },
+    "keywords": [
+        "node",
+        "js",
+        "express",
+        "mongodb"
+    ],
+    "author": "DinhDang",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/DuongDinhDang/NodeJS/issues"
+    },
+    "homepage": "https://github.com/DuongDinhDang/NodeJS#readme",
+    "dependencies": {
+        "express": "5.0.1"
+    },
+    "devDependencies": {
+        "@types/express": "5.0.0",
+        "@types/node": "22.10.7",
+        "typescript": "5.7.3"
+    }
 }
