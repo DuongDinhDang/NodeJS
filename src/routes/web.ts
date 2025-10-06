@@ -22,12 +22,17 @@ import {
     postDeleteProduct,
     postUpdateProduct,
 } from "controllers/admin/product.controller";
+import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
 
 const router = express.Router();
 
 const webRoutes = (app: Express) => {
     router.get("/", getHomePage);
     router.get("/product/:id", getProductPage);
+    router.get("/login", getLoginPage);
+    router.get("/register", getRegisterPage);
+    router.get("/register", getRegisterPage);
+    router.post("/register", postRegister);
 
     // admin routes
     router.get("/admin", getDashboardPage);
