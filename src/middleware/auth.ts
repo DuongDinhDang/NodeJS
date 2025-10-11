@@ -11,17 +11,18 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user;
+    //apply only to admin
     if (req.path.startsWith("/admin")) {
         const user = req.user;
+
         if (user?.role?.name === "ADMIN") {
             next();
-        } else {
-            res.redirect("status/403.ejs");
-        }
+        } else res.render("status/403.ejs");
+
         return;
     }
-    // client routes
+
+    //client routes
     next();
 };
 
