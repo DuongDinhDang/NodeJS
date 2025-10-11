@@ -1,10 +1,12 @@
 import { error } from "console";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { registerNewUser } from "services/client/auth.service";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
 
 const getLoginPage = async (req: Request, res: Response) => {
-    return res.render("client/auth/login.ejs");
+    const { session } = req as any;
+    const messages = session?.messages ?? [];
+    return res.render("client/auth/login.ejs", { messages });
 };
 const getRegisterPage = async (req: Request, res: Response) => {
     const errors = [];
@@ -41,4 +43,22 @@ const postRegister = async (req: Request, res: Response) => {
     return res.redirect("/login");
 };
 
-export { getLoginPage, getRegisterPage, postRegister };
+const getSucccessRedirectPage = async (req: Request, res: Response) => {
+    const user = req.user as any;
+    if (user?.role?.name === "ADMIN") {
+        res.redirect("/admin");
+    } else {
+        res.redirect("/");
+    }
+};
+
+const postLogout = async (req: Request, res: Response, next: NextFunction) => {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+};
+
+export { getLoginPage, getRegisterPage, postRegister, getSucccessRedirectPage, postLogout };
