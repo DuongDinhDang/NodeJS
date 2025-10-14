@@ -1,13 +1,7 @@
-import { error } from "console";
 import { NextFunction, Request, Response } from "express";
 import { registerNewUser } from "services/client/auth.service";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
 
-const getLoginPage = async (req: Request, res: Response) => {
-    const { session } = req as any;
-    const messages = session?.messages ?? [];
-    return res.render("client/auth/login.ejs", { messages });
-};
 const getRegisterPage = async (req: Request, res: Response) => {
     const errors = [];
     const oldData = {
@@ -16,7 +10,19 @@ const getRegisterPage = async (req: Request, res: Response) => {
         password: "",
         confirmPassword: "",
     };
-    return res.render("client/auth/register.ejs", { errors, oldData });
+    return res.render("client/auth/register.ejs", {
+        errors,
+        oldData,
+    });
+};
+
+const getLoginPage = async (req: Request, res: Response) => {
+    const { session } = req as any;
+    const messages = session?.messages ?? [];
+
+    return res.render("client/auth/login.ejs", {
+        messages,
+    });
 };
 
 const postRegister = async (req: Request, res: Response) => {
@@ -24,6 +30,7 @@ const postRegister = async (req: Request, res: Response) => {
 
     const validate = await RegisterSchema.safeParseAsync(req.body);
     if (!validate.success) {
+        //error
         const errorsZod = validate.error.issues;
         const errors = errorsZod?.map((item) => `${item.message} (${item.path[0]})`);
 
@@ -39,17 +46,18 @@ const postRegister = async (req: Request, res: Response) => {
         });
     }
 
+    //success
     await registerNewUser(fullName, email, password);
+
     return res.redirect("/login");
 };
 
-const getSucccessRedirectPage = async (req: Request, res: Response) => {
+const getSuccessRedirectPage = async (req: Request, res: Response) => {
     const user = req.user as any;
+
     if (user?.role?.name === "ADMIN") {
         res.redirect("/admin");
-    } else {
-        res.redirect("/");
-    }
+    } else res.redirect("/");
 };
 
 const postLogout = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,4 +69,4 @@ const postLogout = async (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-export { getLoginPage, getRegisterPage, postRegister, getSucccessRedirectPage, postLogout };
+export { getRegisterPage, getLoginPage, postRegister, getSuccessRedirectPage, postLogout };

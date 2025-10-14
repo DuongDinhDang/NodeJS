@@ -45,7 +45,10 @@
                                     <tr>
                                         <td><%= product.id %></td>
                                         <td><%= product.name %></td>
-                                        <td><%= product.price %></td>
+                                        <td>
+                                            <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
+                                            }).format(product.price) %>
+                                        </td>
                                         <td><%= product.factory %></td>
                                         <td>
                                             <div style="display: flex; gap: 10px">
@@ -61,6 +64,40 @@
                                     <% }) %>
                                 </tbody>
                             </table>
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a
+                                            class="<%= page === 1 ? 'disabled page-link' : 'page-link' %>"
+                                            href="/admin/product?page=<%= page - 1  %>"
+                                            aria-label="Previous"
+                                        >
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <% for(var i=1; i <=totalPages; i++) {%>
+                                    <li class="page-item">
+                                        <a
+                                            class="<%= page === i ? 'active page-link' : 'page-link' %>"
+                                            href="/admin/product?page=<%= i  %>"
+                                        >
+                                            <%= i %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+
+                                    <li class="page-item">
+                                        <a
+                                            class="<%= page === totalPages ? 'disabled page-link' : 'page-link' %>"
+                                            href="/admin/product?page=<%= page + 1  %>"
+                                            aria-label="Next"
+                                        >
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </main>
